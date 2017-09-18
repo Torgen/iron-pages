@@ -1,4 +1,4 @@
-[![Build status](https://travis-ci.org/PolymerElements/iron-pages.svg?branch=master)](https://travis-ci.org/PolymerElements/iron-pages)
+[![Build status](https://travis-ci.org/Torgen/iron-pages.svg?branch=master)](https://travis-ci.org/Torgen/iron-pages)
 
 _[Demo and API docs](https://elements.polymer-project.org/elements/iron-pages)_
 
