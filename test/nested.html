@@ -39,7 +39,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       suite('nested', function() {
         var pages;
         
-        suite('set the selected attribute', function() {
+        suite('0 is selected', function() {
           setup(function(done) {
             pages = fixture('nested');
             pages.addEventListener('iron-items-changed', function onIronItemsChanged() {
@@ -49,9 +49,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           });
 
           test('selected item is display:block and all others are display:none', function() {
-            for (i = 0; i < pages.children.length; i++) {
-              p = pages.children[i]
-              if (p.classList.contains('iron-selected')) {
+            pages.items.forEach(function(p) {
+              if (p == pages.selectedItem) {
                 assert.equal(getComputedStyle(p).display, 'block')
                 assert.isAbove(p.clientHeight, 0)
                 assert.isAbove(p.offsetHeight, 0)
@@ -62,10 +61,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 assert.equal(p.offsetHeight, 0)
                 assert.equal(p.scrollHeight, 0)
               }
-            }
+            });
           });
         });
-
       });
 
     </script>
