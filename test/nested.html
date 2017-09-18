@@ -30,6 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </iron-pages>
       </template>
       <script>
+      window.addEventListener('HTMLImportsLoaded', function(e) {  
         Polymer({
           is: 'nested-pages',
           properties: {
@@ -41,6 +42,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.fire('iron-items-changed', e)
           }
         });
+      });
       </script>
     </dom-module>
 
