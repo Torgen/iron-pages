@@ -18,33 +18,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
-    <link rel="import" href="../iron-pages.html">
+    <link rel="import" href="./nested-pages.html">
     
   </head>
   <body>
-    <dom-module id="nested-pages">
-      <template>
-        <h1>header</h1>
-        <iron-pages selected="[[selected]]" on-iron-items-changed="refire">
-          <slot></slot>
-        </iron-pages>
-      </template>
-      <script>
-      window.addEventListener('HTMLImportsLoaded', function(e) {  
-        Polymer({
-          is: 'nested-pages',
-          properties: {
-            selected: {
-              type: Number,
-            },
-          },
-          refire: function(e, detail) {
-            this.fire('iron-items-changed', e)
-          }
-        });
-      });
-      </script>
-    </dom-module>
 
     <test-fixture id="nested">
       <template>
