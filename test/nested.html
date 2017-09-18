@@ -25,10 +25,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <dom-module id="nested-pages">
       <template>
         <h1>header</h1>
-        <iron-pages selected="0">
+        <iron-pages on-iron-items-changed="refire">
           <slot></slot>
         </iron-pages>
       </template>
+      <script>
+        Polymer({
+          is: 'nested-pages',
+          refire: function(e, detail) {
+            this.fire('iron-items-changed', e)
+          }
+        });
+      </script>
     </dom-module>
 
     <test-fixture id="nested">
@@ -46,30 +54,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       suite('nested', function() {
         var pages;
-
-        suite('defaults', function() {
+        
+        suite('set the selected attribute', function() {
           setup(function(done) {
             pages = fixture('nested');
-            done();
+            pages.addEventListener('iron-items-changed', function onIronItemsChanged() {
+              pages.removeEventListener('iron-items-changed', onIronItemsChanged);
+
+              pages.selected = 0;
+              done();
+            });
+          });
+
+          test('selected value', function() {
+            assert.equal(pages.selected, '0');
+          });
+
+          test('selected item', function() {
+            assert.equal(pages.selectedItem, pages.items[0]);
           });
 
           test('selected item is display:block and all others are display:none', function() {
-            for (i = 0; i < pages.children.length; i++) {
-              var p = pages.children[i]
-              if (p.classList.contains('iron-selected')) {
-                assert.equal(getComputedStyle(p).display, 'block')
+            pages.items.forEach(function(p) {
+              assert.equal(getComputedStyle(p).display, p == pages.selectedItem ? 'block' : 'none');
+              if (p == pages.selectedItem) {
                 assert.isAbove(p.clientHeight, 0)
                 assert.isAbove(p.offsetHeight, 0)
                 assert.isAbove(p.scrollHeight, 0)
-              } else {
-                assert.equal(getComputedStyle(p).display, 'none');
-                assert.equal(p.clientHeight, 0)
-                assert.equal(p.offsetHeight, 0)
-                assert.equal(p.scrollHeight, 0)
               }
-            }
+            });
           });
         });
+
       });
 
     </script>
