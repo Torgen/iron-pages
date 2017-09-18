@@ -44,7 +44,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             pages = fixture('nested');
             pages.addEventListener('iron-items-changed', function onIronItemsChanged() {
               pages.removeEventListener('iron-items-changed', onIronItemsChanged);
-              pages.selected = 0;
               done();
             });
           });
