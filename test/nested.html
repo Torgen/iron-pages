@@ -25,7 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <dom-module id="nested-pages">
       <template>
         <h1>header</h1>
-        <iron-pages>
+        <iron-pages selected="0">
           <slot></slot>
         </iron-pages>
       </template>
@@ -50,68 +50,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         suite('defaults', function() {
           setup(function(done) {
             pages = fixture('nested');
-            pages.addEventListener('iron-items-changed', function onIronItemsChanged() {
-              pages.removeEventListener('iron-items-changed', onIronItemsChanged);
+            window.addEventListener('WebComponentsReady', function onReady() {
+              window.removeEventListener('WebComponentsReady', onReady);
               done();
             });
-          });
-
-          test('to nothing selected', function() {
-            assert.equal(pages.selected, undefined);
-          });
-
-          test('null activateEvent', function() {
-            // `activateEvent` is not a useful feature for iron-pages and it can interfere
-            // with ux; ensure iron-pages has cleared any default `activateEvent`
-            assert.equal(pages.activateEvent, null);
-          });
-
-          test('to iron-selected as selectedClass', function() {
-            assert.equal(pages.selectedClass, 'iron-selected');
-          });
-
-          test('as many items as children', function() {
-            assert.equal(pages.items.length, 4);
-          });
-
-          test('all pages are display:none', function() {
-            pages.items.forEach(function(p) {
-              assert.equal(getComputedStyle(p).display, 'none');
-            });
-          });
-        });
-
-        suite('set the selected attribute', function() {
-          setup(function(done) {
-            pages = fixture('basic');
-            pages.addEventListener('iron-items-changed', function onIronItemsChanged() {
-              pages.removeEventListener('iron-items-changed', onIronItemsChanged);
-
-              pages.selected = 0;
-              done();
-            });
-          });
-
-          test('selected value', function() {
-            assert.equal(pages.selected, '0');
-          });
-
-          test('selected item', function() {
-            assert.equal(pages.selectedItem, pages.items[0]);
           });
 
           test('selected item is display:block and all others are display:none', function() {
-            pages.items.forEach(function(p) {
-              assert.equal(getComputedStyle(p).display, p == pages.selectedItem ? 'block' : 'none');
-              if (p == pages.selectedItem) {
+            pages.childNodes.forEach(function(p) {
+              if (p.classList.contains('iron-selected')) {
+                assert.equal(getComputedStyle(p).display, 'block')
                 assert.isAbove(p.clientHeight, 0)
                 assert.isAbove(p.offsetHeight, 0)
                 assert.isAbove(p.scrollHeight, 0)
+              } else {
+                assert.equal(getComputedStyle(p).display, 'none');
+                assert.equal(p.clientHeight, 0)
+                assert.equal(p.offsetHeight, 0)
+                assert.equal(p.scrollHeight, 0)
               }
             });
           });
         });
-
       });
 
     </script>
