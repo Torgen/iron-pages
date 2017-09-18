@@ -48,14 +48,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var pages;
 
         suite('defaults', function() {
-          setup(function(done) {
-            pages = fixture('nested');
-            window.addEventListener('WebComponentsReady', function onReady() {
-              window.removeEventListener('WebComponentsReady', onReady);
-              done();
-            });
-          });
-
           test('selected item is display:block and all others are display:none', function() {
             pages.childNodes.forEach(function(p) {
               if (p.classList.contains('iron-selected')) {
