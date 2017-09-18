@@ -54,7 +54,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           });
 
           test('selected item is display:block and all others are display:none', function() {
-            pages.childNodes.forEach(function(p) {
+            pages.children.forEach(function(p) {
               if (p.classList.contains('iron-selected')) {
                 assert.equal(getComputedStyle(p).display, 'block')
                 assert.isAbove(p.clientHeight, 0)
