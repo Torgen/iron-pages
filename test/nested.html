@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <html>
   <head>
 
-    <title>iron-pages-basic</title>
+    <title>iron-pages-nested</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
 
@@ -31,7 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </dom-module>
 
-    <test-fixture id="basic">
+    <test-fixture id="nested">
       <template>
         <nested-pages>
           <div id="page0">Page 0</div>
@@ -44,12 +44,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script>
 
-      suite('basic', function() {
+      suite('nested', function() {
         var pages;
 
         suite('defaults', function() {
           setup(function(done) {
-            pages = fixture('basic');
+            pages = fixture('nested');
             pages.addEventListener('iron-items-changed', function onIronItemsChanged() {
               pages.removeEventListener('iron-items-changed', onIronItemsChanged);
               done();
@@ -103,6 +103,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           test('selected item is display:block and all others are display:none', function() {
             pages.items.forEach(function(p) {
               assert.equal(getComputedStyle(p).display, p == pages.selectedItem ? 'block' : 'none');
+              if (p == pages.selectedItem) {
+                assert.isAbove(p.clientHeight, 0)
+                assert.isAbove(p.offsetHeight, 0)
+                assert.isAbove(p.scrollHeight, 0)
+              }
             });
           });
         });
