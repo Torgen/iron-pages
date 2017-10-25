@@ -12,13 +12,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="nested-pages">
   <template>
     <h1>header</h1>
-    <iron-pages selected="0" on-iron-items-changed="refire" on-selected-item-changed="reselect">
+    <iron-pages selected="{{selected}}" on-iron-items-changed="refire" on-selected-item-changed="reselect">
       <slot></slot>
     </iron-pages>
   </template>
   <script>
     Polymer({
       is: 'nested-pages',
+      properties: {
+        selected: {
+          type: Number,
+          value: 0,
+        },
+      },  
       refire: function(e, detail) {
         this.items = e.target.items
         this.fire('iron-items-changed', e)
